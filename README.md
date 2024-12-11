@@ -1,6 +1,6 @@
 # Invisible_Movement
  
 ## Instalar Dependências
-`npm install`
+```npm install```
 
 ## Criar Ficheiro ".env" com Credenciais
