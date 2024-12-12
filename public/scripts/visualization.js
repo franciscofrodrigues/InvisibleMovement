@@ -4,11 +4,16 @@ async function visualization() {
 
   let distance, activeMinutes, sleep, activity, dayTime, type;
 
-  // Dados API
-  // activity = await getData("activity", fetchStartDate, fetchEndDate);
-  // sleep = await getData("sleep", fetchStartDate, fetchEndDate);
-  // activeMinutes = await getData("active_minutes", fetchStartDate, fetchEndDate);
-  // distance = await getData("distance", fetchStartDate, fetchEndDate);
+  const currentLink = document.querySelector("#login-link");
+  if(currentLink.innerText === "Logout") {
+  
+    // Dados API
+  activity = await getData("activity", fetchStartDate, fetchEndDate);
+  sleep = await getData("sleep", fetchStartDate, fetchEndDate);
+  activeMinutes = await getData("active_minutes", fetchStartDate, fetchEndDate);
+  distance = await getData("distance", fetchStartDate, fetchEndDate);
+
+} else {
 
   // Dados estáticos (semana)
   distance = [5, 10, 7, 2, 4, 5, 8];
@@ -21,6 +26,8 @@ async function visualization() {
     type: type[i],
     dayTime: dayTime[i],
   }));
+
+}
 
   // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
@@ -42,7 +49,10 @@ async function visualization() {
   const containerHeight = container.offsetHeight;
 
   const dayMaxSize = containerWidth;
-  let dayHeight = containerHeight;
+
+  let dayHeight;
+  if (viewType === "month" || viewType === "year") dayHeight = containerHeight/4;
+  else dayHeight = containerHeight;
 
   // Dia
   let xPos = 0;
@@ -100,10 +110,10 @@ async function visualization() {
       let dayWidth = timeScale(d.activityTime);
 
       // Limites
-      // if (xPos + dayWidth > containerWidth) {
-      //   xPos = 0;
-      //   yPos += dayHeight; // Passar para baixo
-      // }
+      if (xPos + dayWidth > containerWidth) {
+        xPos = 0;
+        yPos += dayHeight; // Passar para baixo
+      }
 
       // Grupo DIA (retângulo de fundo)
       g.append("rect")
