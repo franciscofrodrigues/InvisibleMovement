@@ -1,33 +1,33 @@
 async function visualization() {
-  const fetchStartDate = "2024-11-01";
-  const fetchEndDate = "2024-12-05";
+  // const fetchStartDate = "2024-11-01";
+  // const fetchEndDate = "2024-12-05";
+
+  d3.select("#vis-container").selectAll("*").remove();
 
   let distance, activeMinutes, sleep, activity, dayTime, type;
 
   const currentLink = document.querySelector("#login-link");
-  if(currentLink.innerText === "Logout") {
-  
+  if (currentLink.innerText === "Logout") {
     // Dados API
-  activity = await getData("activity", fetchStartDate, fetchEndDate);
-  sleep = await getData("sleep", fetchStartDate, fetchEndDate);
-  activeMinutes = await getData("active_minutes", fetchStartDate, fetchEndDate);
-  distance = await getData("distance", fetchStartDate, fetchEndDate);
+    activity = await getData("activity", fetchStartDate, fetchEndDate);
+    sleep = await getData("sleep", fetchStartDate, fetchEndDate);
+    activeMinutes = await getData("active_minutes", fetchStartDate, fetchEndDate);
+    distance = await getData("distance", fetchStartDate, fetchEndDate);
 
-} else {
+    console.log(fetchStartDate, fetchEndDate);
+  } else {
+    // Dados estáticos (semana)
+    distance = [10, 5, 2, 7, 8, 4, 5];
+    activeMinutes = [200, 60, 130, 250, 10, 80, 30];
+    sleep = [8, 7, 7, 10, 8, 5, 10];
 
-  // Dados estáticos (semana)
-  distance = [5, 10, 7, 2, 4, 5, 8];
-  activeMinutes = [60, 200, 250, 130, 80, 30, 10];
-  sleep = [7, 8, 10, 7, 5, 10, 8];
-
-  type = [1, 8, 12, 82, 108, 29, 7];
-  dayTime = [12, 18, 8, 11, 18, 20, 14];
-  activity = type.map((d, i) => ({
-    type: type[i],
-    dayTime: dayTime[i],
-  }));
-
-}
+    type = [8, 1, 82, 12, 7, 108, 29];
+    dayTime = [18, 12, 11, 8, 14, 18, 20];
+    activity = type.map((d, i) => ({
+      type: type[i],
+      dayTime: dayTime[i],
+    }));
+  }
 
   // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
@@ -51,7 +51,7 @@ async function visualization() {
   const dayMaxSize = containerWidth;
 
   let dayHeight;
-  if (viewType === "month" || viewType === "year") dayHeight = containerHeight/4;
+  if (viewType === "month" || viewType === "year") dayHeight = containerHeight / 4;
   else dayHeight = containerHeight;
 
   // Dia
@@ -110,7 +110,7 @@ async function visualization() {
       let dayWidth = timeScale(d.activityTime);
 
       // Limites
-      if (xPos + dayWidth > containerWidth && viewType==="month" && viewType==="year") {
+      if (xPos + dayWidth > containerWidth && (viewType === "month" || viewType === "year")) {
         xPos = 0;
         yPos += dayHeight; // Passar para baixo
       }

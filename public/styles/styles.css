@@ -114,7 +114,7 @@ label:focus {
   padding: 2rem;
 
   overflow-x: auto;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   white-space: nowrap;
 }
 

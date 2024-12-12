@@ -65,6 +65,7 @@ prevArrow.addEventListener("click", () => {
   day = date.getDate();
   month = date.getMonth();
   year = date.getFullYear();
+
   currentText();
   updateFetchDates();
   visualization();
@@ -80,6 +81,7 @@ nextArrow.addEventListener("click", () => {
   day = date.getDate();
   month = date.getMonth();
   year = date.getFullYear();
+
   currentText();
   updateFetchDates();
   visualization();
@@ -92,8 +94,7 @@ const viewRadios = document.querySelectorAll('input[name="view"]');
 const viewRadiosLabel = document.querySelectorAll('label');
 
 viewRadios.forEach((radio, index) => {
-  radio.addEventListener("change", () => {
-    visualization();
+  radio.addEventListener("change", () => {    
     viewRadios.forEach((radio, i) => {
       if (radio.checked) {
         viewType = radio.value;
@@ -102,6 +103,9 @@ viewRadios.forEach((radio, index) => {
         viewRadiosLabel[i].style.opacity = "0.7";
       }
     });
+
     updateFetchDates();
+    visualization();
   });
 });
+
