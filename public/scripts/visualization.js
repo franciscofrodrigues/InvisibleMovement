@@ -2,24 +2,25 @@ async function visualization() {
   const fetchStartDate = "2024-11-01";
   const fetchEndDate = "2024-12-05";
 
-    // Dados API
-    const activity = await getData("activity", fetchStartDate, fetchEndDate);
-    const sleep = await getData("sleep", fetchStartDate, fetchEndDate);
-    const activeMinutes = await getData("active_minutes", fetchStartDate, fetchEndDate);
-    const distance = await getData("distance", fetchStartDate, fetchEndDate);
-    
-  //   // Dados estáticos (semana)
-  //   const distance = [5, 10, 7, 2, 4, 5, 8];
-  //   const activeMinutes = [60, 200, 250, 130, 80, 30, 10];
-  //   const sleep = [7, 8, 10, 7, 5, 10, 8];
+  let distance, activeMinutes, sleep, activity, dayTime, type;
 
-  //   const type = [1, 8, 12, 82, 108, 29, 7];
-  //   const dayTime = [12, 18, 8, 11, 18, 20, 14];
-  //   const activity = type.map((d, i) => ({
-  //     type: type[i],
-  //     dayTime: dayTime[i],
-  //   }));
-  // }
+  // Dados API
+  // activity = await getData("activity", fetchStartDate, fetchEndDate);
+  // sleep = await getData("sleep", fetchStartDate, fetchEndDate);
+  // activeMinutes = await getData("active_minutes", fetchStartDate, fetchEndDate);
+  // distance = await getData("distance", fetchStartDate, fetchEndDate);
+
+  // Dados estáticos (semana)
+  distance = [5, 10, 7, 2, 4, 5, 8];
+  activeMinutes = [60, 200, 250, 130, 80, 30, 10];
+  sleep = [7, 8, 10, 7, 5, 10, 8];
+
+  type = [1, 8, 12, 82, 108, 29, 7];
+  dayTime = [12, 18, 8, 11, 18, 20, 14];
+  activity = type.map((d, i) => ({
+    type: type[i],
+    dayTime: dayTime[i],
+  }));
 
   // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
