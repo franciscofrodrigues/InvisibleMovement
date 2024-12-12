@@ -110,7 +110,7 @@ async function visualization() {
       let dayWidth = timeScale(d.activityTime);
 
       // Limites
-      if (xPos + dayWidth > containerWidth) {
+      if (xPos + dayWidth > containerWidth && viewType==="month" && viewType==="year") {
         xPos = 0;
         yPos += dayHeight; // Passar para baixo
       }
