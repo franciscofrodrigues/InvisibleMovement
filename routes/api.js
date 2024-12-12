@@ -94,12 +94,23 @@ router.get("/activity/:startDate/:endDate", async (req, res) => {
         let startTime = new Date(parseInt(activity.startTimeMillis, 10));
         let dayTime = startTime.getHours();
 
-        //let duration = activity.endTimeMillis - activity.startTimeMillis;
+        let duration = activity.endTimeMillis - activity.startTimeMillis;
 
-        return { type, dayTime };
+        return { type, startTime, dayTime, duration };
       });
 
-    res.json(activityData);
+    // Filtrar uma atividade por dia apenas (maior duração)
+    const dayActivities = {};
+    for (let i = 0; i < activityData.length; i++) {
+      const date = activityData[i].startTime.toISOString().split("T")[0];
+
+      if (!dayActivities[date] || activityData[i].duration > dayActivities[date].duration) {
+        dayActivities[date] = activityData[i];
+      }
+    }
+    const finalActivities = Object.values(dayActivities);
+
+    res.json(finalActivities);
   } catch (error) {
     console.error(error);
   }

@@ -9,6 +9,7 @@ const PORT = process.env.NODE_PORT || 3000;
 
 app.use(express.json());
 app.use(express.static('public'))
+app.set('view engine', 'ejs');
 
 // Cliente OAuth2
 const oAuth2Client = new google.auth.OAuth2(
@@ -18,8 +19,8 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 
 // Login
-app.get("/", (req, res) => {
-  // res.redirect("/auth");
+app.get("/login", (req, res) => {
+  res.redirect("/auth");
 });
 
 // Autenticação OAuth2
@@ -47,7 +48,7 @@ app.get("/auth/callback", async (req, res) => {
 
     app.locals.tokens = tokens;
 
-    res.redirect("/dashboard");
+    res.redirect("/");
   } catch (error) {
     res.send("Autenticação Falhou");
   }
@@ -61,14 +62,18 @@ const requireAuth = (req, res, next) => {
   next();
 };
 
+// Logout
+app.get("/logout", (req, res) => {
+  app.locals.tokens = null;
+  res.redirect("/");
+});
+
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-// Dashboard
-app.get("/dashboard", (req, res) => {
-  if (!app.locals.tokens) {
-    return res.redirect("/auth");
-  }
-  res.send("Autenticado");
+// Visualization
+app.get("/", (req, res) => {
+  const tokens = app.locals.tokens;
+  res.render('pages/index', { tokens });
 });
 
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––

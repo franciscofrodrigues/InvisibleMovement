@@ -2,11 +2,8 @@
     @page {
       margin: 0;
       padding: 0;
-      size: landscape
+      size: A5 landscape;
     }
-    /* body {
-      display: none !important;
-    } */
     body {
       background: transparent;
       overflow: hidden;

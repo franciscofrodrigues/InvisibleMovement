@@ -1,8 +1,6 @@
 @font-face {
   font-family: "Switzer-Variable";
-  src: url("../assets/fonts/Switzer-Variable.woff2") format("woff2"),
-       url("../assets/fonts/Switzer-Variable.woff") format("woff"), 
-       url("../assets/fonts/Switzer-Variable.ttf") format("truetype");
+  src: url("../assets/fonts/Switzer-Variable.woff2") format("woff2"), url("../assets/fonts/Switzer-Variable.woff") format("woff"), url("../assets/fonts/Switzer-Variable.ttf") format("truetype");
   font-weight: 100 900;
   font-display: swap;
   font-style: normal;
@@ -19,15 +17,15 @@ html,
 body {
   background-color: #000;
   color: #fff;
-  font-family: 'Switzer-Variable';
-  font-variation-settings: 'wght' 300;
+  font-family: "Switzer-Variable";
+  font-variation-settings: "wght" 300;
 
   width: 100vw;
   height: 100vh;
 }
 
 h3 {
-  font-variation-settings: 'wght' 700;
+  font-variation-settings: "wght" 700;
 }
 
 main {
@@ -53,26 +51,38 @@ main {
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 20%;
   height: 100%;
 }
+
 #nav-arrows > #current-day {
   margin-left: 2rem;
+  vertical-align: middle;
 }
+
+#nav-arrows > img {
+  user-select: none;
+}
+
 #next {
   transform: rotate(180deg);
 }
 
 #view-selection {
+  width: 60%;
   height: 100%;
 
   display: flex;
   align-items: center;
-  line-height: 1rem;
+  justify-content: center;
 }
 
-
 input[type="radio"] {
-  /* display: none; */
+  display: none;
+}
+
+label[for="day"] {
+  opacity: 1;
 }
 
 label {
@@ -81,15 +91,19 @@ label {
   user-select: none;
   margin-left: 1rem;
   height: 100%;
-}
-
-input[type="radio"]:checked + label {
-  opacity: 1;
+  vertical-align: middle;
 }
 
 label:hover,
 label:focus {
   opacity: 1;
+}
+
+#login-link {
+  width: 20%;
+  text-decoration: none;
+  color: #fff;
+  text-align: end;
 }
 
 /* –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -101,21 +115,11 @@ label:focus {
 
   overflow-x: auto;
   overflow-y: hidden;
-  white-space:nowrap;
-
+  white-space: nowrap;
 }
-/* 
-#vis-container > svg {
-  width: 100%;
-  display: inline-block;
-} */
 
 #vis-container > #vis-info {
   width: 50%;
   height: 10px;
   background-color: #ff0000;
-}
-
-.up-line {
-  /* mix-blend-mode: multiply; */
 }

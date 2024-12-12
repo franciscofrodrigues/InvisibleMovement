@@ -11,14 +11,21 @@ let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
 
+// Datas de fetch
+let fetchStartDate, fetchEndDate;
+
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+// Texto atual #current-day
 function currentText() {
   currentView.textContent = day + " " + months[month] + " " + year;
 }
 currentText();
 
-function updateFetchDates() {
-  let fetchStartDate, fetchEndDate;
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
+// Fetch data
+function updateFetchDates() {
   if (viewType === "day") {
     fetchStartDate = new Date(year, month, day).toISOString().split('T')[0];
     fetchEndDate = fetchStartDate;
@@ -44,9 +51,11 @@ function updateFetchDates() {
     fetchEndDate = endOfYear.toISOString().split('T')[0];
   }
 }
+updateFetchDates();
 
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
+// Previous
 prevArrow.addEventListener("click", () => {
   if (viewType === "day") date.setDate(date.getDate() - 1);
   if (viewType === "week") date.setDate(date.getDate() - 7);
@@ -60,6 +69,7 @@ prevArrow.addEventListener("click", () => {
   updateFetchDates();
 });
 
+// Next
 nextArrow.addEventListener("click", () => {
   if (viewType === "day") date.setDate(date.getDate() + 1);
   if (viewType === "week") date.setDate(date.getDate() + 7);
@@ -75,14 +85,20 @@ nextArrow.addEventListener("click", () => {
 
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
+// Radios do tipo de visualização
 const viewRadios = document.querySelectorAll('input[name="view"]');
+const viewRadiosLabel = document.querySelectorAll('label');
 
-for (let i = 0; i < viewRadios.length; i++) {
-  viewRadios[i].addEventListener("change", () => {
-    if (viewRadios[i].checked) {
-      viewType = viewRadios[i].value;
-      console.log(viewType);
-      updateFetchDates();
-    }
+viewRadios.forEach((radio, index) => {
+  radio.addEventListener("change", () => {
+    viewRadios.forEach((radio, i) => {
+      if (radio.checked) {
+        viewType = radio.value;
+        viewRadiosLabel[i].style.opacity = "1";
+      } else {
+        viewRadiosLabel[i].style.opacity = "0.7";
+      }
+    });
+    updateFetchDates();
   });
-}
+});
