@@ -113,6 +113,11 @@ async function visualization() {
       if (xPos + dayWidth > containerWidth && (viewType === "month" || viewType === "year")) {
         xPos = 0;
         yPos += dayHeight; // Passar para baixo
+
+        if(yPos >= containerHeight) {
+          xPos += containerWidth;
+          yPos = 0;
+        }
       }
 
       // Grupo DIA (retângulo de fundo)
@@ -140,8 +145,7 @@ async function visualization() {
         .attr("width", VLWidth)
         .attr("height", dayHeight)
         .attr("fill", (d) => {
-          if (timeDayColor(data[i].activityHour) !== "#140E02") {
-            // Bege
+          if (timeDayColor(data[i].activityHour) !== "#140E02") { // Bege
             return "#000"; // Linhas pretas
           } else {
             return "#fff"; // Linhas brancas
