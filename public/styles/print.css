@@ -13,7 +13,7 @@
     }
     #vis-container {
       display: block !important;
-      overflow:hidden;
+      overflow: hidden;
       height: 100%;
     }
     #vis-container svg{

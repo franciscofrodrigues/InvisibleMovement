@@ -48,6 +48,8 @@ async function visualization() {
   const containerComputedStyle = window.getComputedStyle(container, null);
   let containerWidth = container.offsetWidth;
   let containerHeight = container.offsetHeight;
+
+  // Subtrair o Padding
   containerWidth -= parseFloat(containerComputedStyle.paddingLeft) + parseFloat(containerComputedStyle.paddingRight);
   containerHeight -= parseFloat(containerComputedStyle.paddingTop) + parseFloat(containerComputedStyle.paddingBottom);
 
@@ -69,7 +71,7 @@ async function visualization() {
   // Tempo (Horizontal)
   const timeScale = d3
     .scaleLinear()
-    .domain([0, 500])
+    .domain([0, 480]) // 8h
     .range([dayMaxSize / 4, dayMaxSize]);
 
   // Cor de fundo
@@ -79,11 +81,6 @@ async function visualization() {
   const typesColors = ["#C9EDDC", "#00548B", "#1B544C", "#9FA3F8", "#D10003", "#EEC8C9", "#FFA200", "#FFCA5C"];
   const activityTypes = [1, 7, 8, 12, 29, 80, 82, 108];
   const activityColor = d3.scaleOrdinal().domain(activityTypes).range(typesColors);
-
-  const activityTimeScale = d3
-    .scaleLinear()
-    .domain([0, 500])
-    .range([10, dayHeight / 10]);
 
   // Tamanho barras horizontais
   const sleepScale = d3
@@ -119,7 +116,7 @@ async function visualization() {
         xPos = 0;
         yPos += dayHeight; // Passar para baixo
 
-        if(yPos >= containerHeight) {
+        if (yPos >= containerHeight) {
           xPos += containerWidth;
           yPos = 0;
         }
@@ -134,47 +131,48 @@ async function visualization() {
         .attr("height", dayHeight)
         .attr("fill", timeDayColor(d.activityHour)); // Cor de acordo com a hora do dia
 
-//       // Grupo DISTÂNCIA (retângulos verticais)
-//       const distanceLines = d.distance;
-//       let VLWidth = containerWidth / 200; // Responsivo ao tamanho do ecrã
-//       const distanceGroup = g.append("g");
+      // Grupo DISTÂNCIA (retângulos verticais)
+      const distanceLines = d.distance;
+      let VLWidth = containerWidth / 400; // Responsivo ao tamanho do ecrã
+      const distanceGroup = g.append("g");
 
-//       distanceGroup
-//         .selectAll("rect")
-//         .data(d3.range(distanceLines))
-//         .enter()
-//         .append("rect")
-//         .attr("id", (d, i) => "distance-" + i)
-//         .attr("x", (d, i) => Math.random() * dayWidth + xPos)
-//         .attr("y", yPos)
-//         .attr("width", VLWidth)
-//         .attr("height", dayHeight)
-//         .attr("fill", (d) => {
-//           if (timeDayColor(data[i].activityHour) !== "#140E02") { // Bege
-//             return "#000"; // Linhas pretas
-//           } else {
-//             return "#fff"; // Linhas brancas
-//           }
-//         });
+      distanceGroup
+        .selectAll("rect")
+        .data(d3.range(distanceLines))
+        .enter()
+        .append("rect")
+        .attr("id", (d, i) => "distance-" + i)
+        .attr("x", (d, i) => Math.random() * dayWidth + xPos)
+        .attr("y", yPos)
+        .attr("width", VLWidth)
+        .attr("height", dayHeight)
+        .attr("fill", (d) => {
+          // Bege
+          if (timeDayColor(data[i].activityHour) !== "#140E02") {
+            return "#000"; // Linhas pretas
+          } else {
+            return "#fff"; // Linhas brancas
+          }
+        });
 
-//       // Grupo ATIVIDADE (retângulos horizontais)
-//       const activityLines = Math.floor(d.activityTime / 60); // Para cada min de atividade
-//       const activityeGroup = g.append("g");
+      // Grupo ATIVIDADE (retângulos horizontais)
+      const activityLines = Math.floor(d.activityTime / 60); // Para cada min de atividade
+      const activityeGroup = g.append("g");
 
-//       activityeGroup
-//         .selectAll("rect")
-//         .data(d3.range(activityLines))
-//         .enter()
-//         .append("rect")
-//         .attr("id", (d, i) => "activity-" + i)
-//         .attr("x", xPos)
-//         .attr("y", (d, i) => Math.random() * dayHeight + yPos)
-//         .attr("width", dayWidth)
-//         .attr("height", sleepScale(d.sleep)) // Tamanho dependente do sono
-//         .attr("fill", activityColor(d.activityType)); // Cor dependente do tipo de atividade
+      activityeGroup
+        .selectAll("rect")
+        .data(d3.range(activityLines))
+        .enter()
+        .append("rect")
+        .attr("id", (d, i) => "activity-" + i)
+        .attr("x", xPos)
+        .attr("y", (d, i) => Math.random() * dayHeight + yPos)
+        .attr("width", dayWidth)
+        .attr("height", sleepScale(d.sleep)) // Tamanho dependente do sono
+        .attr("fill", activityColor(d.activityType)); // Cor dependente do tipo de atividade
 
-//       // Posicionar lado a lado
-//       xPos += timeScale(d.activityTime);
+      // Posicionar lado a lado
+      xPos += timeScale(d.activityTime);
     });
 }
 
