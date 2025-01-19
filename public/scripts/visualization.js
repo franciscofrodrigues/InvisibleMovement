@@ -45,7 +45,7 @@ async function visualization() {
 
   // Container Visualização
   const container = document.querySelector("#vis-container");
-  const containerComputedStyle = window.getComputedStyle(container, null);
+  const containerComputedStyle = window.getComputedStyle(container);
   let containerWidth = container.offsetWidth;
   let containerHeight = container.offsetHeight;
 
@@ -64,6 +64,7 @@ async function visualization() {
   // Dia
   let xPos = 0;
   let yPos = 0;
+  let incXPos = 0;
 
   // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
@@ -113,28 +114,45 @@ async function visualization() {
 
       // Limites
       if (xPos + dayWidth > containerWidth && (viewType === "month" || viewType === "year")) {
-        xPos = 0;
+        xPos = incXPos;
         yPos += dayHeight; // Passar para baixo
 
         if (yPos >= containerHeight) {
-          xPos += containerWidth;
+          incXPos += containerWidth;
           yPos = 0;
         }
       }
 
+      // Ordem
+      svg.append("g").attr("id", "days");
+      svg.append("g").attr("id", "verticalLines");
+      svg.append("g").attr("id", "horizontalLines");
+      svg.append("g").attr("id", "text");
+
       // Grupo DIA (retângulo de fundo)
-      g.append("rect")
+      svg
+        .select("#days")
+        .append("rect")
         .attr("id", "day-" + i)
         .attr("x", xPos)
         .attr("y", yPos)
         .attr("width", dayWidth) // Largura conforme tempo de atividade
         .attr("height", dayHeight)
-        .attr("fill", timeDayColor(d.activityHour)); // Cor de acordo com a hora do dia
+        .attr("fill", timeDayColor(d.activityHour)) // Cor de acordo com a hora do dia
+        .on("mouseover", function () {
+          d3.select("#vis-info")
+            .transition()
+            .text("Distância: " + d.distance + "km · Tempo Ativo: " + Math.floor(d.activityTime / 60) + "h · Tipo de Atividade: " + d.activityType + " · Sono: " + d.sleep + "h")
+            .style("display", "flex");
+        })
+        .on("mouseout", function () {
+          d3.select("#vis-info").transition().text("").style("display", "none");
+        });
 
       // Grupo DISTÂNCIA (retângulos verticais)
       const distanceLines = d.distance;
       let VLWidth = containerWidth / 400; // Responsivo ao tamanho do ecrã
-      const distanceGroup = g.append("g");
+      const distanceGroup = svg.select("#verticalLines").append("g");
 
       distanceGroup
         .selectAll("rect")
@@ -156,10 +174,10 @@ async function visualization() {
         });
 
       // Grupo ATIVIDADE (retângulos horizontais)
-      const activityLines = Math.floor(d.activityTime / 60); // Para cada min de atividade
-      const activityeGroup = g.append("g");
+      const activityLines = Math.floor(d.activityTime / 60); // Para cada hora de atividade
+      const activityGroup = svg.select("#horizontalLines").append("g");
 
-      activityeGroup
+      activityGroup
         .selectAll("rect")
         .data(d3.range(activityLines))
         .enter()

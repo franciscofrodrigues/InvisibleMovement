@@ -12,6 +12,7 @@
   </head>
   <body>
     <main>
+      <!-- Barra de Navegação -->
       <div id="nav-container">
         <div id="nav-arrows">
           <img id="previous" src="assets/arrow.png" alt="previous" />
@@ -27,17 +28,28 @@
         </div>
 
         <% if (tokens) { %>
-          <a id="login-link" href="/logout">Logout</a>
+        <a id="login-link" href="/logout">Logout</a>
         <% } else { %>
         <a id="login-link" href="/login">Login</a>
         <% } %>
       </div>
 
+      <!-- Visualização de Informação -->
       <div id="vis-container"></div>
+
+      <!-- Informação sobre dados -->
+      <div id="vis-info-container">
+        <p id="vis-info"></p>
+      </div>
+
+      <!-- Overlay -->
+      <div id="img-container">
+        <img id="texture" src="assets/texture.jpg" alt="texture" />
+      </div>
     </main>
 
-    <script src="/scripts/fetchData.js"></script>    
+    <script src="/scripts/fetchData.js"></script>
     <script src="/scripts/nav.js"></script>
-    <script src="/scripts/visualization.js"></script>    
+    <script src="/scripts/visualization.js"></script>
   </body>
 </html>

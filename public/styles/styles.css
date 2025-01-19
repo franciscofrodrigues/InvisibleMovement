@@ -40,6 +40,7 @@ main {
   width: 100%;
   height: 15%;
   padding: 2rem;
+  z-index: 1;
 
   display: flex;
   flex-direction: row;
@@ -114,7 +115,7 @@ label:focus {
 
 #vis-container {
   width: 100%;
-  height: 85%;
+  height: 80%;
   padding: 2rem;
 
   overflow-x: auto;
@@ -122,8 +123,43 @@ label:focus {
   white-space: nowrap;
 }
 
-#vis-container > #vis-info {
-  width: 50%;
-  height: 10px;
-  background-color: #ff0000;
+#vis-info-container {  
+  height: 5%;
+  margin: auto;
+  padding: 2rem;
+  position: relative;
+  bottom: 2rem;
+}
+
+#vis-info-container > #vis-info {
+  height: 100%;
+  display: none;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 0.8rem;
+  color: #000;
+
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+}
+
+/* –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+#img-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#texture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.05;
 }
