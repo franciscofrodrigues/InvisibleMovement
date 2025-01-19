@@ -133,7 +133,6 @@ async function visualization() {
       svg
         .select("#days")
         .append("rect")
-        .attr("id", "day-" + i)
         .attr("x", xPos)
         .attr("y", yPos)
         .attr("width", dayWidth) // Largura conforme tempo de atividade
@@ -159,7 +158,6 @@ async function visualization() {
         .data(d3.range(distanceLines))
         .enter()
         .append("rect")
-        .attr("id", (d, i) => "distance-" + i)
         .attr("x", (d, i) => Math.random() * dayWidth + xPos)
         .attr("y", yPos)
         .attr("width", VLWidth)
@@ -182,7 +180,6 @@ async function visualization() {
         .data(d3.range(activityLines))
         .enter()
         .append("rect")
-        .attr("id", (d, i) => "activity-" + i)
         .attr("x", xPos)
         .attr("y", (d, i) => Math.random() * dayHeight + yPos)
         .attr("width", dayWidth)
