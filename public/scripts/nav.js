@@ -45,12 +45,6 @@ function updateFetchDates() {
 
     fetchStartDate = startOfMonth.toISOString().split("T")[0];
     fetchEndDate = endOfMonth.toISOString().split("T")[0];
-  } else if (viewType === "year") {
-    const startOfYear = new Date(year, 0, 1);
-    const endOfYear = new Date(year, 11, 31);
-
-    fetchStartDate = startOfYear.toISOString().split("T")[0];
-    fetchEndDate = endOfYear.toISOString().split("T")[0];
   }
 }
 updateFetchDates();
@@ -62,7 +56,6 @@ prevArrow.addEventListener("click", () => {
   if (viewType === "day") date.setDate(date.getDate() - 1);
   if (viewType === "week") date.setDate(date.getDate() - 7);
   if (viewType === "month") date.setMonth(date.getMonth() - 1);
-  if (viewType === "year") date.setFullYear(date.getFullYear() - 1);
 
   day = date.getDate();
   month = date.getMonth();
@@ -81,7 +74,6 @@ nextArrow.addEventListener("click", () => {
   if (viewType === "day") date.setDate(date.getDate() + 1);
   if (viewType === "week") date.setDate(date.getDate() + 7);
   if (viewType === "month") date.setMonth(date.getMonth() + 1);
-  if (viewType === "year") date.setFullYear(date.getFullYear() + 1);
 
   day = date.getDate();
   month = date.getMonth();

@@ -113,14 +113,13 @@ async function visualization() {
       let dayWidth = timeScale(d.activityTime);
 
       // Limites
-      if (xPos + dayWidth > containerWidth && (viewType === "month" || viewType === "year")) {
-        xPos = incXPos;
+      if (i % 7 == 0 && viewType === "month") {
+        xPos = 0;
         yPos += dayHeight; // Passar para baixo
-
-        if (yPos >= containerHeight) {
-          incXPos += containerWidth;
-          yPos = 0;
-        }
+      }
+      if (yPos >= containerHeight) {
+        incXPos += containerWidth;
+        yPos = 0;
       }
 
       // Ordem
