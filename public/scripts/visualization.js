@@ -126,7 +126,6 @@ async function visualization() {
       svg.append("g").attr("id", "days");
       svg.append("g").attr("id", "verticalLines");
       svg.append("g").attr("id", "horizontalLines");
-      svg.append("g").attr("id", "text");
 
       // Grupo DIA (retângulo de fundo)
       svg
@@ -140,7 +139,7 @@ async function visualization() {
         .on("mouseover", function () {
           d3.select("#vis-info")
             .transition()
-            .text("Distância: " + d.distance + "km · Tempo Ativo: " + Math.floor(d.activityTime / 60) + "h · Tipo de Atividade: " + d.activityType + " · Sono: " + d.sleep + "h")
+            .text("Distância: " + d.distance + "km · Tempo Ativo: " + Math.floor(d.activityTime / 60) + "h · Sono: " + d.sleep + "h")
             .style("display", "flex");
         })
         .on("mouseout", function () {
@@ -161,7 +160,7 @@ async function visualization() {
         .attr("y", yPos)
         .attr("width", VLWidth)
         .attr("height", dayHeight)
-        .attr("fill", (d) => {
+        .attr("fill", () => {
           // Bege
           if (timeDayColor(data[i].activityHour) !== "#140E02") {
             return "#000"; // Linhas pretas

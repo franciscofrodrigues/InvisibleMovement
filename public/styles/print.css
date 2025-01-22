@@ -15,7 +15,6 @@
       display: block !important;
       overflow: hidden;
       height: 100%;
-      padding: 2rem;
     }
     #vis-container svg{
       width: 100%;
